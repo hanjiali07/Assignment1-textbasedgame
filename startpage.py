@@ -12,7 +12,7 @@ Width, Height = 500, 750
 canvas = tkinter.Canvas(root, width=Width, highlightthickness=0)
 canvas.pack(side = "bottom", fill="both", expand="yes")
 
-path_of_image = 'C:\\Users\\larry\\Desktop\\coverart.jpg'
+path_of_image = 'coverart.jpg'
 image1 = ImageTk.PhotoImage(Image.open(path_of_image))
 canvas.create_image(250, 400, image=image1)
 
