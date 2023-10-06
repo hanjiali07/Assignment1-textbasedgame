@@ -4,7 +4,9 @@ class Game():
     def rollDice():
         result = []
         roll = random.randint(1,6)
+        print("Dice 1: " + str(roll))
         roll2 = random.randint(1,6)
+        print("Dice 2: " + str(roll2))
         result = roll + roll2
         return(result)
     
@@ -25,3 +27,6 @@ class Game():
             return -1
         elif result == "Critical Win":
             return 1
+        else:
+            return 0
+    
