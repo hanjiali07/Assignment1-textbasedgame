@@ -1,7 +1,11 @@
 import random
 
+''' implements the game data and logic.
+this module rolls the dice and changes the stats and determines whether its a win/loss.'''
+
 class Game():
     def rollDice():
+        '''rolling the dice'''
         result = []
         roll = random.randint(1,6)
         print("Dice 1: " + str(roll))
@@ -11,6 +15,7 @@ class Game():
         return(result)
     
     def challenge_outcome(total, modifier):
+        '''calculates whether its a win/loss'''
         total = total + modifier
         print("The modified total: " + str(total))
         if total == 2 or total == 3:
@@ -23,6 +28,7 @@ class Game():
             return("Critical Win")
         
     def changeStats(result):
+        '''determine whether or not to change stats'''
         if result == "Critical Loss":
             return -1
         elif result == "Critical Win":

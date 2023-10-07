@@ -1,29 +1,51 @@
 from Detective import Detective
 from Murderer import Murderer
 from Game import Game
+import tkinter
+from tkinter import *
+from PIL import Image, ImageTk
 
+import tkinter.messagebox
+
+"""This module implements the interactivity with the user.
+"""
+root = tkinter.Tk()
+root.title("Mystery Of Edencrest Manor")
+root.geometry("500x750")
+Width, Height = 500, 750
+
+
+canvas = tkinter.Canvas(root, width=Width, highlightthickness=0) #creates canvas
+canvas.pack(side = "bottom", fill="both", expand="yes")
+
+path_of_image = 'coverart.jpg' #this is where to get the image
+image1 = ImageTk.PhotoImage(Image.open(path_of_image)) #open image
+canvas.create_image(250, 400, image=image1)
+
+title = "Mystery of Edencrest Manor" # title of the interface
+canvas.create_text(250, 200, text="Mystery Of Edencrest Manor", font="Terminal 20", fill='white')
+
+
+def start():
+    '''this function gets rid of the interface and stars the game'''
+    root.destroy()
+
+startButton = Button(root, text="Start", font=("Terminal",10), command=start, height=2, width=10) #button to start the game
+startButton.place(x = 205, y = 600)
+
+
+root.mainloop()
+
+#introduction to the story
 intro = "You stand at the mansion's threshold, facing a choice: : Will you succumb to darkness by assuming the role of The Murderer—determined to outsmart Inspector Montgomery and evade justice’s clutches—or will you step into Detective shoes instead?"
 print(intro)
 
-isDetective = False
-isMurderer = False
+isDetective = False #initializing variable for detective story
+isMurderer = False  #initializing variable for murderer story
 
-storyDecision = input("Do you want to be the detective or murderer?: ")
-if(storyDecision == "murderer"):
-    print("I'm the murderer")
-    strength = 2
-    dex = 1
-    int = 1
-    player = Murderer(strength, dex, int)
-else: 
-    print("I'm the detective")
-    isDetective = True
-    strength = -1
-    dex = 1
-    int = 2
-    player = Detective(strength, dex, int)
 
-if isDetective == True:
+def detectiveStory():
+    '''this function is the detective story along with the dice rolling.'''
     print("Role choice: Detective")
     print("As the Detective, you find yourself standing at Edencrest Manor, a foreboding place. The study door is slightly ajar.")
     print("After entering you see an envelope, on the desk with Lord Dior’s one-of-a-kind wax seal addressed to 'Cassandra'. Could it conceal dangerous secrets linked to a forbidden love affair?")
@@ -36,11 +58,11 @@ if isDetective == True:
     print("Your first challenge is to search the mansion for vital clues that may lead you to the murderer. This challenge relies on your Intelligence (IQ).")
 
 
-    challenge = input("Hit Enter to roll the dice: ")
-    total = Game.rollDice()
-    print("Player Intelligence: " + str(player.int))
+    challenge = input("Hit Enter to roll the dice: ") #user input to roll dice
+    total = Game.rollDice() 
+    print(Detective.getInt(player))
 
-    results = Game.challenge_outcome(total, player.int)
+    results = Game.challenge_outcome(total, player.int) #gets roll outcome
     print("Making a int check: ")
     print(results)
     player.int = player.int + Game.changeStats(results)
@@ -73,7 +95,7 @@ if isDetective == True:
 
     challenge2 = input("Hit Enter to roll the dice: ")
     total = Game.rollDice()
-    print("Player Dexterity: " + str(player.dex))
+    print(Detective.getDex(player))
 
     results = Game.challenge_outcome(total, player.dex)
     print("Making a dex check: ")
@@ -103,9 +125,9 @@ if isDetective == True:
 
     challenge3 = input("Hit Enter to roll the dice: ")
     total = Game.rollDice()
-    print("Player Dexterity: " + str(player.dex))
-    print("Player Strength: " + str(player.strength))
-    print("Player Intelligence: " + str(player.int))
+    print(Detective.getDex(player))
+    print(Detective.getStrength(player))
+    print(Detective.getInt(player))
 
     finalStatsTotal = player.dex + player.strength + player.int
 
@@ -133,10 +155,135 @@ if isDetective == True:
     else:
         print("Wow you won. Slay.")
 
+
+def murdererStory():
+    '''this function includes the murderer role and story along with the dice roll.'''
+    print("Role: Murderer")
+    print("Twenty-three years ago, Christian Dior had an affair with the housemaid Cassandra Hawthorne which resulted in the birth of a son who was the legitimate inheritor of lord Dior's wealth – you.")
+    print("Lady Elizabeth, being aware of this situation, engaged in her own affair with you.")
+    print("In hopes of gaining wealth and authority, you murdered Christian Dior while your lover, Lady Elizabeth, complicit in this act benefited from it as well.")
+    print()
+    print("Challenge 1: Elimitating Evidence")
+    print("Your first challenge is to erase any trace of your presence at the crime scene. This challenge relies heavily on your Dexterity (DX) attribute.")
+
+    challenge = input("Hit Enter to roll the dice: ")
+    total = Game.rollDice()
+    print(Murderer.getDex(player))
+
+    results = Game.challenge_outcome(total, player.dex)
+    print("Making a dex check: ")
+    print(results)
+    player.dex = player.dex + Game.changeStats(results)
+    if(results == "Critical Loss"):
+        print("You make a mess, and the Inspector is hot on your trail. Your dexterity has been dropped.")
+    elif(results == "Critical Win"):
+        print("You eliminate all evidence and gain confidence. Your dexterity is raised")
+    elif(results == "Loss"):
+        print("You leave behind some incriminating evidence. No stats have changed.")
+    else:
+        print("You clean up the scene without a hitch. No stats have changed.")
+    print("Dexterity after challenge: " + str(player.dex))
+    challengeOneEnd = input("Challenge one end, enter to continue: ")
+
+    print("In the dimly lit halls of Edencrest Manor, a sense of unease consumes you.")
+    print("The butler,  your mother, the housemaid and the chef ( idk how to word that the chef is his dad not his biological dad) are being relentlessly questioned by the Inspector.")
+    print("Their responses could determine whether you will be held responsible for the alleged murder of Lord Christian Dior.")
+    print("As you realise the gravity of the situation adrenaline courses through your veins.")
+    print("Your only defence in this game is your intellect. As you observe the scene around you you notice the suspicious expressions on the faces of the mansion's staff.")
+    print("It becomes crucial for you to blend in seamlessly among them. With each step calculated carefully you manage to slip from the interrogation and join servants who are engrossed in their duties.")
+    print("Your objective is to appear immersed while remaining detached from the unfolding drama.")
+    print("Relying on your intellect you navigate through conversations, laughter and potential traps as lingering suspicion hangs heavy in the air.")
+    print("Any misstep could draw attention from the piercing gaze of the Inspector towards yourself.")
+    print("In your quest for safety your ultimate aim is to find Lady Elizabeth. Perhaps she can offer some protection or at least divert attention away from yourself. The roll of the dice will determine your success.")
+    print()
+    print("Challenge 2: Dodging Suspicion")
+
+    challengeTwo = input("Hit Enter to roll the dice: ")
+    total = Game.rollDice()
+    print(Murderer.getInt(player))
+    results = Game.challenge_outcome(total, player.int)
+    print("Making a int check: ")
+    print(results)
+    player.int = player.int + Game.changeStats(results)
+    if(results == "Critical Loss"):
+        print("You draw suspicion to yourself. Your intelligence has been dropped.")
+    elif(results == "Critical Win"):
+        print("You successfully divert suspicion away from yourself. Your intelligence is raised")
+    elif(results == "Loss"):
+        print("You struggle to maintain your cover. No stats have changed.")
+    else:
+        print("You go unnoticed. No stats have changed.")
+    print("Intelligence after challenge: " + str(player.int))
+
+    challengeTwoEnd = input("Challenge two end, enter to continue: ")
+
+    print("In the midst of the tense ambiance enveloping Edencrest Manor, your final challenge presents itself: escaping the relentless Inspector.")
+    print("As you navigate through poorly illuminated passageways, your path to liberation is obstructed by locked doors and barred windows.")
+    print("Your physical and mental strength are put to the test as you grapple with these obstacles.")
+    print("A glimmer of hope emerges in Lady Elizabeth's message, assuring a rendezvous on the opposite side of the lake—a beacon of hope amidst this dire predicament.")
+    print("The final obstacle is a heavy oak door secured firmly shut. Should you succeed in prying it open, a small boat awaits upon the tranquil waters ahead.")
+    print("With fate hanging from your trembling hand, you cast forth the dice whilst praying for triumph; your very life and future hinge upon its outcome.")
+    print()
+    print("Final Challenge: The Great Escape")
+    print("Your final challenge is to make a daring escape from Edencrest Manor. This challenge relies on your Strength (ST) to overcome obstacles in your path and slip away undetected.")
+
+    challengeThree = input("Hit Enter to roll the dice: ")
+    total = Game.rollDice()
+    print(Murderer.getStrength(player))
+    print("Making a strength check: ")
+    print(results)
+    player.int = player.int + Game.changeStats(results)
+    if(results == "Critical Loss"):
+        print("You draw suspicion to yourself. Your intelligence has been dropped.")
+    elif(results == "Critical Win"):
+        print("You successfully divert suspicion away from yourself. Your intelligence is raised")
+    elif(results == "Loss"):
+        print("You struggle to maintain your cover. No stats have changed.")
+    else:
+        print("You go unnoticed. No stats have changed.")
+    print("Intelligence after challenge: " + str(player.int))
+
+    challengeThreeEnd = input("Final challenge end, enter to continue: ")
+
+    print("Making the final check: ")
+    print(results)
+    if(results == "Critical Loss"):
+        print("You accuse the wrong person, letting the real killer go free.")
+        isWin = False
+    elif(results == "Critical Win"):
+        print("You not only identify the killer but also capture them, ensuring justice is served.")
+        isWin = True
+    elif(results == "Loss"):
+        print("You're close but not entirely correct.")
+        isWin = False
+    else:
+        print("You correctly identify the murderer.")
+        isWin = True
+
+    if(isWin == False):
+        print("You lost! Twenty-three years ago, Christian Dior had an affair with the housemaid Cassandra Hawthorne that resulted in the birth of a son whom was the legitimate inheritor of lord Dior's wealth.")
+        print("Lady Elizabeth, being aware of this situation, engaged in her own affair with Cassandra's son. In hopes of gaining wealth and authority, the son murdered Christian Dior while Lady Elizabeth, complicit in this act benefited from it as well.")
+        print("Due to your incompetence, they managed to get away with murder and you were fired from the inspection team.")
+    else:
+        print("Wow you won. Slay.")
+
+storyDecision = input("Do you want to be the detective or murderer?: ")
+if(storyDecision == "murderer" or storyDecision == "Murderer"):
+    print("I'm the murderer")
+    strength = 2
+    dex = 1
+    int = -1
+    player = Murderer(strength, dex, int)
+else: 
+    print("I'm the detective")
+    isDetective = True
+    strength = -1
+    dex = 1
+    int = 2
+
+if isDetective == True:
+    detectiveStory()
+
 else:
-    #murder story goes here.
-    print("pick the other option :D")
-
-print("this is a testing commit")
-
-
+    #murder story is here
+   murdererStory()
