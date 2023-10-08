@@ -7,16 +7,16 @@ class Game():
     def rollDice():
         '''rolling the dice'''
         result = []
-        roll = random.randint(1,6)
+        roll = random.randint(1,6) #gets a random integer between 1 and 6 from first dice roll
         print("Dice 1: " + str(roll))
-        roll2 = random.randint(1,6)
+        roll2 = random.randint(1,6) #gets a random integer between 1 and 6 from second dice roll
         print("Dice 2: " + str(roll2))
-        result = roll + roll2
+        result = roll + roll2 #sum of both dice rolls
         return(result)
     
     def challenge_outcome(total, modifier):
         '''calculates whether its a win/loss'''
-        total = total + modifier
+        total = total + modifier #sum of stats for the attribute
         print("The modified total: " + str(total))
         if total == 2 or total == 3:
             return ("Critical Loss")
