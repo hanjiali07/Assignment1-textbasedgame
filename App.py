@@ -37,8 +37,14 @@ startButton.place(x = 205, y = 600)
 root.mainloop()
 
 #introduction to the story
-intro = "You stand at the mansion's threshold, facing a choice: : Will you succumb to darkness by assuming the role of The Murderer—determined to outsmart Inspector Montgomery and evade justice’s clutches—or will you step into Detective shoes instead?"
-print(intro)
+introOne = print("Deep within the serene town of Stars Hallow, a notorious residence known as Edencrest Manor concealed its sinister mysteries.")
+introTwo = print("One ill-fated evening, an ear-piercing shriek shattered the tranquillity when Lord Christian Dior's lifeless body was discovered in his private study. ")
+introThree = print("Inspector Montgomery and his diligent team from the Stars Hollow Constabulary were urgently summoned to investigate this heinous crime.")
+introFour = print("With suspicion looming heavily in the air, they meticulously questioned every staff member while scouring the vast manor for any semblance of evidence.")
+introFive = print("Meanwhile, amidst the shadows that engulfed the mansion, a mysterious figure skulked—the Murderer. Residing within Edencrest Manor's dark corners, they observed each unfolding moment with bated breath. ")
+introSix = print("Their ultimate objective? Eradicate all potential traces leading back to their identity and execute a daring escape without raising even an inkling of suspicion.")
+intro = "You stand at the mansion's threshold, facing a choice: : Will you succumb to darkness by assuming the role of The Murderer—determined to outsmart Inspector Montgomery and evade justice’s clutches—or will you step into Detective shoes instead? Welcome, to the Mystery of Edencrest Manor."
+
 
 isDetective = False #initializing variable for detective story
 isMurderer = False  #initializing variable for murderer story
@@ -61,11 +67,10 @@ def detectiveStory():
     challenge = input("Hit Enter to roll the dice: ") #user input to roll dice
     total = Game.rollDice() 
     print(Detective.getInt(player))
-
     results = Game.challenge_outcome(total, player.int) #gets roll outcome
     print("Making a int check: ")
     print(results)
-    player.int = player.int + Game.changeStats(results)
+    player.int = player.int + Game.changeStats(results) #this get this  new stat from rolling the dice
     if(results == "Critical Loss"):
         print("You've missed crucial evidence, your intelligence has been dropped.")
     elif(results == "Critical Win"):
@@ -93,14 +98,14 @@ def detectiveStory():
     print("In this challenge, your Dexterity (DX) will be essential for your success in questioning the mansion's staff and suspects.")
 
 
-    challenge2 = input("Hit Enter to roll the dice: ")
+    challenge2 = input("Hit Enter to roll the dice: ") #rolling the dice
     total = Game.rollDice()
     print(Detective.getDex(player))
 
-    results = Game.challenge_outcome(total, player.dex)
+    results = Game.challenge_outcome(total, player.dex) #gets the dice roll outcome
     print("Making a dex check: ")
     print(results)
-    player.dex = player.dex + Game.changeStats(results)
+    player.dex = player.dex + Game.changeStats(results) #gets the new stats 
     if(results == "Critical Loss"):
         print("You offend the suspects and get misleading information. Your dexterity has been dropped.")
     elif(results == "Critical Win"):
@@ -123,15 +128,15 @@ def detectiveStory():
     print("Final Challenge: Identifying the Culprit.")
     print("Your final challenge is to piece together the evidence and make an accurate deduction.")
 
-    challenge3 = input("Hit Enter to roll the dice: ")
+    challenge3 = input("Hit Enter to roll the dice: ")#rolling the dice
     total = Game.rollDice()
     print(Detective.getDex(player))
     print(Detective.getStrength(player))
     print(Detective.getInt(player))
 
-    finalStatsTotal = player.dex + player.strength + player.int
+    finalStatsTotal = player.dex + player.strength + player.int #gets stats for all attributes
 
-    results = Game.challenge_outcome(total, finalStatsTotal)
+    results = Game.challenge_outcome(total, finalStatsTotal) #prints the outcome of stats
 
     print("Making the final check: ")
     print(results)
@@ -153,8 +158,10 @@ def detectiveStory():
         print("Lady Elizabeth, being aware of this situation, engaged in her own affair with Cassandra's son. In hopes of gaining wealth and authority, the son murdered Christian Dior while Lady Elizabeth, complicit in this act benefited from it as well.")
         print("Due to your incompetence, they managed to get away with murder and you were fired from the inspection team.")
     else:
-        print("Wow you won. Slay.")
-
+        print("You Won! You caught the killer who turned out to be the son of Cassandra Hawthorne and Lord Christian Dior– the product of an affair.")
+        print("Lady Elizabeth, being aware of this situation, engaged in her own affair with Cassandra's son. ")
+        print("In hopes of gaining wealth and authority, the son murdered Christian Dior while Lady Elizabeth, complicit in this act, benefited from it as well.")
+        print("Due to this victory, you have been declared the best detective in Stars Hallow and you have been promoted to head of your department resulting in a huge pay raise!")
 
 def murdererStory():
     '''this function includes the murderer role and story along with the dice roll.'''
@@ -166,7 +173,7 @@ def murdererStory():
     print("Challenge 1: Elimitating Evidence")
     print("Your first challenge is to erase any trace of your presence at the crime scene. This challenge relies heavily on your Dexterity (DX) attribute.")
 
-    challenge = input("Hit Enter to roll the dice: ")
+    challenge = input("Hit Enter to roll the dice: ") # rolls dice
     total = Game.rollDice()
     print(Murderer.getDex(player))
 
@@ -261,11 +268,9 @@ def murdererStory():
         isWin = True
 
     if(isWin == False):
-        print("You lost! Twenty-three years ago, Christian Dior had an affair with the housemaid Cassandra Hawthorne that resulted in the birth of a son whom was the legitimate inheritor of lord Dior's wealth.")
-        print("Lady Elizabeth, being aware of this situation, engaged in her own affair with Cassandra's son. In hopes of gaining wealth and authority, the son murdered Christian Dior while Lady Elizabeth, complicit in this act benefited from it as well.")
-        print("Due to your incompetence, they managed to get away with murder and you were fired from the inspection team.")
+        print("You lost! You get caught by the inspector Lady Elizabeth leaves you in the dust. You have been sentenced to death for the murder of Lord Christian Dior.")
     else:
-        print("Wow you won. Slay.")
+        print("You win! You made your great escape with Lady Elizabeth and received your inheritance!")
 
 storyDecision = input("Do you want to be the detective or murderer?: ")
 if(storyDecision == "murderer" or storyDecision == "Murderer"):
@@ -280,7 +285,7 @@ else:
     strength = -1
     dex = 1
     int = 2
-
+    player = Detective(strength, dex, int)
 if isDetective == True:
     detectiveStory()
 
